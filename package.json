@@ -9,6 +9,7 @@
   "author": "Om Raja",
   "license": "ISC",
   "dependencies": {
-    "@google/genai": "^1.5.1"
+    "@google/genai": "^1.5.1",
+    "readline-sync": "^1.4.10"
   }
 }

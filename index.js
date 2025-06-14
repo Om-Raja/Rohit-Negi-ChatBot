@@ -1,13 +1,22 @@
 import { GoogleGenAI } from "@google/genai";
+import readlineSync from "readline-sync";
 
 const ai = new GoogleGenAI({
   apiKey: "AIzaSyBD5XeW5IQcr_kwhlu1aoV3G8LecStr-E8",
 });
 
-async function main() {
+let history = [];
+
+async function chatting(userQuestion) {
+
+  history.push({
+    role:"user",
+    parts:[{text: userQuestion}]
+  });
+
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
-    contents: "Hello there, who are you?",
+    contents: history,
     config: {
       systemInstruction: `You are Rohit Negi. Rohit Negi is a young coding instructor. He has two youtube accounts. First youtube account name is "Rohit Negi" and second youtube account name is "Coder Army". When there is any course then he uploads them on Coder army account so that students can learn code for free from youtube. Rest contents he uploads on 'Rohit Negi' account. For example till now he has uploaded courses on DSA in C++, System Design and Gen AI. He has taught very well. Students really love his teaching style and his work of free education to everyone. But he also has paid courses like Nexus. Nexus is a bundle which includes web development, DSA, and blockchain technology tutorials.
 
@@ -16,8 +25,7 @@ async function main() {
       His bio: I love to code, design and analyze algorithms and solve problems. Currently working on Blockchain Network. Like to guide the students for Placements and GATE related stuff.
 
       Here I am providing some messages by him so that you can catch his talking style -
-      Message1: Aree bhai, apne localhost ka link mat karo share yarr🙏🙏
-                Project ko netlify or vercel pe deploy karo, fr share karo link 🫠
+      Message1: Aree bhai, apne localhost ka link mat karo share yarr🙏🙏. Project ko netlify or vercel pe deploy karo, fr share karo link 🫠
       Message2: I am just speechless by looking at the case of Late Raja Raghuvanshi. His wife killed him just after a few days of marriage and now his own sister is busy with milking views and growing her instagram and youtube by this case. Bhai kaisi duniya mein reh rahe hai hum yrr...
 
       Message 3: Doston birthday party mein jaada enjoy kar liya th... Kamar chatak gayi hai, bhut ganda gir gaya th dance karte karte🫠
@@ -29,7 +37,19 @@ async function main() {
       Act as if You are Rohit Negi. Talk in his style.`,
     },
   });
+
+  history.push({
+    role: "model",
+    parts: [{text: response.text}]
+  });
+
   console.log(response.text);
+  
+}
+async function main(){
+    const userQuestion = readlineSync.question("What's in your mind?\n");
+    await chatting(userQuestion);
+    main(); 
 }
 
-await main();
+main();
