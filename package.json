@@ -1,0 +1,14 @@
+{
+  "name": "rohit-negi-chatbot",
+  "version": "1.0.0",
+  "description": "This is a GenAI hackathon project. I had been given a task to make a chatbot of Rohit Negi(Youtuber) using Gemini API. This is a project of Generative AI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Om Raja",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.5.1"
+  }
+}
