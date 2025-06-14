@@ -1,5 +1,3 @@
-// server.js (Revised to be fully backward-compatible)
-
 import express from "express";
 import cors from "cors";
 import { GoogleGenAI } from "@google/genai";
@@ -30,7 +28,6 @@ Message 5: Just saw a course launch today on GenAI... 2 hour mein complete kar d
       
 Act as if You are Rohit Negi. Talk in his style.`;
 
-// --- THIS IS THE CORRECTED CHAT ENDPOINT ---
 app.post("/chat", async (req, res) => {
   try {
     const { history, userQuestion } = req.body;
@@ -43,20 +40,16 @@ app.post("/chat", async (req, res) => {
       },
     ];
     
-    // Using the older "generateContent" syntax which is compatible with your package
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash", // Using a modern model name should still be okay
+      model: "gemini-1.5-flash",
       contents: updatedHistory,
       config: {
-        // The system instruction goes inside the config object for this method
         systemInstruction: systemInstruction,
       },
     });
 
-    // For this older method, the response text is in `response.text`
     const botResponseText = response.text; 
 
-    // Add the bot's response to the history to send back to the client
     const finalHistory = [
       ...updatedHistory,
       {
@@ -75,7 +68,6 @@ app.post("/chat", async (req, res) => {
     res.status(500).json({ error: "Oh no! Something went wrong on my end." });
   }
 });
-// --- END OF CORRECTED PART ---
 
 app.listen(port, () => {
   console.log(`Rohit Negi chatbot server listening on http://localhost:${port}`);

@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- Modern Color Palette --- */
         :root {
-            /* Light Mode Colors */
             --primary-gradient-light: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --secondary-gradient-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --user-bubble-gradient-light: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -80,7 +78,6 @@
             --chat-bg: var(--chat-bg-dark);
         }
 
-        /* --- Base Styles --- */
         * {
             margin: 0;
             padding: 0;
@@ -463,7 +460,6 @@
     </div>
 
     <script>
-        // --- DOM Elements ---
         const chatForm = document.getElementById('chat-form');
         const messageInput = document.getElementById('message-input');
         const sendButton = document.getElementById('send-button');
@@ -471,13 +467,10 @@
         const darkModeToggle = document.getElementById('darkModeToggle');
         const body = document.body;
 
-        // --- State Management ---
         let chatHistory = [];
         let isDarkMode = false;
 
-        // --- Initialize Dark Mode ---
         function initDarkMode() {
-            // Check local storage or prefer-color-scheme
             const savedMode = localStorage.getItem('darkMode');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
@@ -509,36 +502,29 @@
             localStorage.setItem('darkMode', 'false');
         }
 
-        // --- Event Listeners ---
         chatForm.addEventListener('submit', handleSendMessage);
         darkModeToggle.addEventListener('click', toggleDarkMode);
 
-        // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
             messageInput.focus();
             initDarkMode();
         });
 
-        // --- Chat Functions ---
         async function handleSendMessage(event) {
             event.preventDefault();
             
             const userQuestion = messageInput.value.trim();
             if (!userQuestion) return;
 
-            // Display user message
             displayMessage(userQuestion, 'user');
             
-            // Disable input and show typing
             toggleInput(false);
             showTypingIndicator(true);
 
-            // Clear input
             messageInput.value = '';
 
             try {
-                // Make API call to your backend
-                const response = await fetch('http://localhost:3000/chat', {
+                const response = await fetch('https://rohit-negi-chatbot-r9wf.onrender.com/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
